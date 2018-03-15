@@ -1,0 +1,10 @@
+
+- dumppaa luokkataulut 
+composer dump
+
+- resetoi taulut
+php artisan migrate:reset
+
+- nollaa kanta ja luo testidata
+php artisan migrate:refresh --seed
+
