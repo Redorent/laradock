@@ -1,4 +1,5 @@
 @echo off
+echo "We're assuming you HAVE wget and docker..."
 
 if "%1" == "start" goto start
 if "%1" == "end" goto shutdown
@@ -25,10 +26,16 @@ goto end
 call docker-compose up -d mysql nginx phpmyadmin
 if %ERRORLEVEL% neq 0 (goto error)
 echo "Finished."
+wget -qO- http://localhost:8000/api/hello
+if %ERRORLEVEL% neq 0 (goto restart_docker)
 goto end
 
 :shutdown
 call docker-compose down
+goto end
+
+:restart_docker
+echo "FFS, restart docker!"
 goto end
 
 :error
