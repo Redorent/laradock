@@ -1,5 +1,5 @@
 @echo off
-echo "We're assuming you HAVE wget and docker..."
+
 
 if "%1" == "start" goto start
 if "%1" == "end" goto shutdown
@@ -23,10 +23,11 @@ call docker-compose exec --u=laradock workspace bash
 goto end
 
 :start
+echo We're assuming you HAVE wget and docker...
 call docker-compose up -d mysql nginx phpmyadmin
 if %ERRORLEVEL% neq 0 (goto error)
 echo "Finished."
-wget -qO- http://localhost:8000/api/hello
+wget -qO- http://localhost:8000/api/status
 if %ERRORLEVEL% neq 0 (goto restart_docker)
 goto end
 
@@ -35,11 +36,11 @@ call docker-compose down
 goto end
 
 :restart_docker
-echo "FFS, restart docker!"
+echo FFS, restart docker!
 goto end
 
 :error
-echo "**** Docker container failed to start, shutting down."
+echo **** Docker container failed to start, shutting down.
 goto shutdown
 
 :end
