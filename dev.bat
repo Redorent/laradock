@@ -24,7 +24,7 @@ goto end
 
 :start
 echo We're assuming you HAVE wget and docker...
-call docker-compose up -d mysql nginx phpmyadmin
+call docker-compose up -d mysql nginx phpmyadmin mongo
 if %ERRORLEVEL% neq 0 (goto error)
 echo "Finished."
 wget -qO- http://localhost:8000/api/status
