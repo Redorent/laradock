@@ -1,12 +1,10 @@
 @echo off
 
-
 if "%1" == "start" goto start
 if "%1" == "end" goto shutdown
 if "%1" == "workspace" goto workspace
 if "%1" == "mysql" goto mysql
 if "%1" == "mysql-shell" goto mysql-shell
-
 goto end
 
 :mysql
@@ -17,16 +15,22 @@ goto end
 call docker-compose exec mysql bash
 goto end
 
+:mongo
+call docker-compose exec mongo base
+goto end
 
 :workspace
 call docker-compose exec --u=laradock workspace bash
 goto end
 
 :start
-echo We're assuming you HAVE wget and docker...
 call docker-compose up -d mysql nginx phpmyadmin mongo
 if %ERRORLEVEL% neq 0 (goto error)
-echo "Finished."
+
+where /q wget
+IF ERRORLEVEL 1 (
+    ECHO You don't have WGET installed, I cannot check if BE is running or not.
+) 
 wget -qO- http://localhost:8000/api/status
 if %ERRORLEVEL% neq 0 (goto restart_docker)
 goto end
