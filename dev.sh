@@ -2,7 +2,7 @@
 
 if [ "$1" == "start" ];
 	then
-	docker-compose up -d mysql nginx phpmyadmin
+	docker-compose up -d --build mysql nginx phpmyadmin
 	exit
 fi
 
