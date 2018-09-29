@@ -388,16 +388,11 @@ services:
       ports:
         - "${MONGODB_PORT}:27017"
       volumes:
-        - "/${USER}/${MONGO_SAVE_PATH}:/data/db"
-      environment:
-        - MONGO_DATA_DIR=/data/db
-        - MONGO_LOG_DIR=/dev/null
+        - ${DATA_PATH_HOST}/mongo:/data/db
       networks:
         - backend
 
-
-### RethinkDB Container #######################################
-
+### RethinkDB ##############################################
     rethinkdb:
       build: ./rethinkdb
       ports:
