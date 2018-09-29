@@ -188,7 +188,7 @@ RUN if [ ${INSTALL_SSH2} = true ]; then \
 ;fi
 
 ###########################################################################
-# SOAP:
+# GMP:
 ###########################################################################
 
 USER root
@@ -197,7 +197,7 @@ ARG INSTALL_GMP=false
 ARG PHP_VERSION=${PHP_VERSION}
 
 RUN if [ ${INSTALL_GMP} = true ]; then \
-  # Install the PHP SOAP extension
+  # Install the PHP GMP extension
   apt-get -y install php${PHP_VERSION}-gmp \
 ;fi
 
@@ -393,8 +393,8 @@ RUN if [ ${INSTALL_SWOOLE} = true ]; then \
 ARG INSTALL_LIBPNG=false
 
 RUN if [ ${INSTALL_LIBPNG} = true ]; then \
-    apt update && \
-    apt install libpng16-16 \
+    apt-get update && \
+    apt-get install libpng16-16 \
 ;fi
 
 ###########################################################################
@@ -446,7 +446,8 @@ ENV NVM_DIR /home/laradock/.nvm
 
 RUN if [ ${INSTALL_NODE} = true ]; then \
     # Install nvm (A Node Version Manager)
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash \
+    mkdir -p $NVM_DIR && \
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash \
         && . $NVM_DIR/nvm.sh \
         && nvm install ${NODE_VERSION} \
         && nvm use ${NODE_VERSION} \
@@ -841,6 +842,25 @@ RUN if [ ${INSTALL_DUSK_DEPS} = true ]; then \
   && unzip chromedriver_linux64.zip \
   && mv chromedriver /usr/local/bin/ \
   && rm chromedriver_linux64.zip \
+;fi
+
+###########################################################################
+# Phalcon:
+###########################################################################
+
+ARG INSTALL_PHALCON=false
+ARG LARADOCK_PHALCON_VERSION
+ENV LARADOCK_PHALCON_VERSION ${LARADOCK_PHALCON_VERSION}
+
+RUN if [ $INSTALL_PHALCON = true ]; then \
+    apt-get update && apt-get install -y unzip libpcre3-dev gcc make re2c \
+    && curl -L -o /tmp/cphalcon.zip https://github.com/phalcon/cphalcon/archive/v${LARADOCK_PHALCON_VERSION}.zip \
+    && unzip -d /tmp/ /tmp/cphalcon.zip \
+    && cd /tmp/cphalcon-${LARADOCK_PHALCON_VERSION}/build \
+    && ./install \
+    && echo "extension=phalcon.so" >> /etc/php/${LARADOCK_PHP_VERSION}/mods-available/phalcon.ini \
+    && ln -s /etc/php/${LARADOCK_PHP_VERSION}/mods-available/phalcon.ini /etc/php/${LARADOCK_PHP_VERSION}/cli/conf.d/30-phalcon.ini \
+    && rm -rf /tmp/cphalcon* \
 ;fi
 
 ###########################################################################

@@ -566,6 +566,28 @@ docker-compose up -d php-worker
 
 
 <br>
+<a name="Use-Mailu"></a>
+## Use Mailu
+
+1 - You need register a domain.
+
+2 - Required RECAPTCHA for signup email [HERE](https://www.google.com/recaptcha/admin)
+
+2 - modify following environment variable in `.env` file
+
+```
+MAILU_RECAPTCHA_PUBLIC_KEY=<YOUR_RECAPTCHA_PUBLIC_KEY>
+MAILU_RECAPTCHA_PRIVATE_KEY=<YOUR_RECAPTCHA_PRIVATE_KEY>
+MAILU_DOMAIN=laradock.io
+MAILU_HOSTNAMES=mail.laradock.io
+```
+
+2 - Open your browser and visit `http://YOUR_DOMAIN`.
+
+
+
+
+<br>
 <a name="Use-NetData"></a>
 ## Use NetData
 
@@ -1019,6 +1041,27 @@ docker-compose up -d minio
 
 
 
+
+
+<br>
+<a name="Use-Thumbor"></a>
+## Use Thumbor
+
+Thumbor is a smart imaging service. It enables on-demand crop, resizing and flipping of images. ([Thumbor](https://github.com/thumbor/thumbor))
+
+1 - Configure Thumbor:
+  - Checkout all the options under the thumbor settings
+
+
+2 - Run the Thumbor Container (`minio`) with the `docker-compose up` command. Example:
+
+```bash
+docker-compose up -d thumbor
+```
+
+3 - Navigate to an example image on `http://localhost:8000/unsafe/300x300/i.imgur.com/bvjzPct.jpg`
+
+For more documentation on Thumbor visit the [Thumbor documenation](http://thumbor.readthedocs.io/en/latest/index.html) page
 
 
 <br>
@@ -1843,7 +1886,7 @@ This error sometimes happens because your Laravel application isn't running on t
 
 ## I get stuck when building nginx on `fetch http://mirrors.aliyun.com/alpine/v3.5/main/x86_64/APKINDEX.tar.gz`
 
-As stated on [#749](https://github.com/laradock/laradock/issues/749#issuecomment-293296687), removing the line `RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/' /etc/apk/repositories` from `nginx/Dockerfile` solves the problem.		
+As stated on [#749](https://github.com/laradock/laradock/issues/749#issuecomment-419652646), Already fixed，just set `CHANGE_SOURCE` to false.		
 
 ## Custom composer repo packagist url and npm registry url
 
