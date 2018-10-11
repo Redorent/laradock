@@ -387,8 +387,8 @@ services:
       build: ./mongo
       ports:
         - "${MONGODB_PORT}:27017"
-      volumes:
-        - ${DATA_PATH_HOST}/mongo:/data/db
+      volumes:        
+        - "/${USER}/${MONGO_SAVE_PATH}:/data/db"
       networks:
         - backend
 
