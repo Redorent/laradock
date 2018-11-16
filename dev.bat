@@ -31,14 +31,12 @@ call docker-compose exec --u=laradock workspace bash
 goto finish
 
 :build %2
-set DATA_PATH_HOST=C:\Users\%USERNAME%\.laradock/data
-set MONGO_DATA_PATH=c:/Users/%USERNAME%/.laradock/data
-call docker-compose up -d %2
+call docker-compose up -d --build %2
 goto finish
 
 :start
-set DATA_PATH_HOST=.laradock/data2
-call docker-compose up -d mongo mysql nginx mongo phpmyadmin
+set MONGO_DATA_PATH=c:/Users/%USERNAME%/.laradock/data
+call docker-compose up -d mysql nginx mongo phpmyadmin redis
 if %ERRORLEVEL% neq 0 (goto error)
 goto workspace
 
