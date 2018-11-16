@@ -2,6 +2,8 @@
 
 case "$1" in
 start*)
+	export DATA_PATH_HOST=$HOME/.laradock/data
+	export MONGO_DATA_PATH=$DATA_PATH_HOST
 	docker-compose up -d --build phpmyadmin mysql nginx mongo
 	if [ "$?" -eq 0 ];
 	then
