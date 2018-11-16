@@ -5,7 +5,7 @@
 ### Paths #################################################
 
 # Point to the path of your applications code on your host
-APP_CODE_PATH_HOST=../redorent-api
+APP_CODE_PATH_HOST=../
 
 # Point to where the `APP_CODE_PATH_HOST` should be in the container. You may add flags to the path `:cached`, `:delegated`. When using Docker Sync add `:nocopy`
 APP_CODE_PATH_CONTAINER=/var/www:cached
@@ -96,9 +96,9 @@ WORKSPACE_INSTALL_PHPDBG=false
 WORKSPACE_INSTALL_SSH2=false
 WORKSPACE_INSTALL_LDAP=false
 WORKSPACE_INSTALL_GMP=false
-WORKSPACE_INSTALL_SOAP=true
+WORKSPACE_INSTALL_SOAP=false
 WORKSPACE_INSTALL_IMAP=false
-WORKSPACE_INSTALL_MONGO=true
+WORKSPACE_INSTALL_MONGO=false
 WORKSPACE_INSTALL_AMQP=false
 WORKSPACE_INSTALL_MSSQL=false
 WORKSPACE_INSTALL_DRUSH=false
@@ -126,7 +126,7 @@ WORKSPACE_INSTALL_IONCUBE=false
 WORKSPACE_PUID=1000
 WORKSPACE_PGID=1000
 WORKSPACE_CHROME_DRIVER_VERSION=2.32
-WORKSPACE_TIMEZONE=Europe/Helsinki
+WORKSPACE_TIMEZONE=UTC
 WORKSPACE_SSH_PORT=2222
 
 ### PHP_FPM ###############################################
@@ -143,11 +143,11 @@ PHP_FPM_INSTALL_MEMCACHED=false
 PHP_FPM_INSTALL_XDEBUG=false
 PHP_FPM_INSTALL_PHPDBG=false
 PHP_FPM_INSTALL_IMAP=false
-PHP_FPM_INSTALL_MONGO=true
+PHP_FPM_INSTALL_MONGO=false
 PHP_FPM_INSTALL_AMQP=false
 PHP_FPM_INSTALL_MSSQL=false
 PHP_FPM_INSTALL_SSH2=false
-PHP_FPM_INSTALL_SOAP=true
+PHP_FPM_INSTALL_SOAP=false
 PHP_FPM_INSTALL_GMP=false
 PHP_FPM_INSTALL_EXIF=false
 PHP_FPM_INSTALL_AEROSPIKE=false
@@ -171,7 +171,7 @@ PHP_WORKER_INSTALL_SOAP=false
 
 ### NGINX #################################################
 
-NGINX_HOST_HTTP_PORT=8000
+NGINX_HOST_HTTP_PORT=80
 NGINX_HOST_HTTPS_PORT=443
 NGINX_HOST_LOG_PATH=./logs/nginx/
 NGINX_SITES_PATH=./nginx/sites/
