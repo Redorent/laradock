@@ -1,13 +1,7 @@
 @echo off
 
-if "%1" == "start" goto start
-if "%1" == "end" goto shutdown
-if "%1" == "workspace" goto workspace
-if "%1" == "mysql" goto mysql
-if "%1" == "mongo" goto mongo
-if "%1" == "mysql-shell" goto mysql-shell
-if "%1" == "test" goto test
-goto help
+goto %1
+goto finish
 
 :help
 echo Usage:
@@ -22,44 +16,36 @@ goto end
 
 :mysql
 call docker-compose exec mysql mysql -uroot -proot "%2"
-goto end
+goto finish
 
-:mysql-shell
+:mysql_shell
 call docker-compose exec mysql bash
-goto end
+goto finish
 
 :mongo
 call docker-compose exec mongo mongo
-goto end
+goto finish
 
 :workspace
 call docker-compose exec --u=laradock workspace bash
-goto end
+goto finish
+
+:build %2
+call docker-compose up -d --build %2
+goto finish
 
 :start
-call docker-compose up -d mysql nginx phpmyadmin mongo
+set MONGO_DATA_PATH=c:/Users/%USERNAME%/.laradock/data
+call docker-compose up -d mysql nginx mongo phpmyadmin redis
 if %ERRORLEVEL% neq 0 (goto error)
+goto workspace
 
-where /q wget
-IF ERRORLEVEL 1 (
-    ECHO You don't have WGET installed, I cannot check if BE is running or not.
-)
-wget -qO- http://localhost:8000/api/status
-if %ERRORLEVEL% neq 0 (goto restart_docker)
-goto end
-
-:shutdown
-call docker-compose down
-goto end
-
-:restart_docker
-echo FFS, restart docker!
-goto end
+:end
+docker-compose down
+goto finish
 
 :error
 echo **** Docker container failed to start, shutting down.
-goto shutdown
+goto finish
 
-:test
-:end
-echo.
+:finish
