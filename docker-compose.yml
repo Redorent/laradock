@@ -39,6 +39,8 @@ volumes:
     driver: ${VOLUMES_DRIVER}
   elasticsearch:
     driver: ${VOLUMES_DRIVER}
+  mongodb_data:
+    driver: local
 
 services:
 
@@ -413,7 +415,7 @@ services:
       ports:
         - "${MONGODB_PORT}:27017"
       volumes:
-        - ${DATA_PATH_HOST}/mongo:/data/db
+        - mongodb_data:/data/db
       networks:
         - backend
 
