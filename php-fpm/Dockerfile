@@ -726,6 +726,18 @@ RUN if [ ${INSTALL_FFMPEG} = true ]; then \
 ;fi
 
 ###########################################################################
+# MONGO Client:
+###########################################################################
+
+USER root
+ARG INSTALL_MONGO_TOOLS=false
+
+RUN if [ ${INSTALL_MONGO_TOOLS} = true ]; then \
+    apt-get update -yqq && \
+    apt-get -y install mongo-tools \
+;fi
+
+###########################################################################
 # Check PHP version:
 ###########################################################################
 
@@ -760,3 +772,4 @@ WORKDIR /var/www
 CMD ["php-fpm"]
 
 EXPOSE 9000
+

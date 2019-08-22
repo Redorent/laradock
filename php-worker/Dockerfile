@@ -149,6 +149,18 @@ RUN if [ ${INSTALL_TAINT} = true ]; then \
     docker-php-ext-enable taint \
 ;fi
 
+###########################################################################
+# MONGO Client:
+###########################################################################
+
+USER root
+ARG INSTALL_MONGO_TOOLS=false
+
+RUN if [ ${INSTALL_MONGO_TOOLS} = true ]; then \
+    apt-get update -yqq && \
+    apt-get -y install mongo-tools \
+;fi
+
 #
 #--------------------------------------------------------------------------
 # Optional Supervisord Configuration

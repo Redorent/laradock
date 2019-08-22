@@ -1056,6 +1056,17 @@ RUN if [ ${INSTALL_GNU_PARALLEL} = true ]; then \
   apt-get -y install parallel \
 ;fi
 
+###########################################################################
+# MONGO Client:
+###########################################################################
+
+USER root
+ARG INSTALL_MONGO_TOOLS=false
+
+RUN if [ ${INSTALL_MONGO_TOOLS} = true ]; then \
+    apt-get update -yqq && \
+    apt-get -y install mongo-tools \
+;fi
 
 ###########################################################################
 # Check PHP version:
