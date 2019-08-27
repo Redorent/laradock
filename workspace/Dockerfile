@@ -1064,8 +1064,10 @@ USER root
 ARG INSTALL_MONGO_TOOLS=false
 
 RUN if [ ${INSTALL_MONGO_TOOLS} = true ]; then \
+    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4 && \
+    echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.0 multiverse" | tee /etc/apt/sources.list.d/mongodb.list && \
     apt-get update -yqq && \
-    apt-get -y install mongo-tools \
+    apt-get -y install mongodb-org-tools \
 ;fi
 
 ###########################################################################
